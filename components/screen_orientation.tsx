@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler'
 import {useEffect} from 'react'
 import {OrientationLock, lockAsync} from 'expo-screen-orientation'
 
