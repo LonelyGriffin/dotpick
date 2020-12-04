@@ -13,11 +13,6 @@ import {RootStack} from './navigation/root_stack'
 const currentPicture: Picture = paintingPictureJson as any
 
 export default function App() {
-  const [state, setState] = useState({
-    currentPicture,
-    currentPictureLayerIndex: 0
-  })
-
   useEffect(() => {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE)
   }, [])
