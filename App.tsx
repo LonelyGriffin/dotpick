@@ -11,7 +11,7 @@ import {OrientationLock} from 'expo-screen-orientation'
 import LoadingScreen from './screens/loading_screen'
 import {ScreenName} from './common/navigation/screen_name'
 import {Provider} from 'react-redux'
-import {globalStore} from './common/global_store/store'
+import {globalStore} from './common/global_store'
 
 const currentPicture: Picture = paintingPictureJson as any
 

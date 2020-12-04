@@ -1,5 +1,5 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
-import navigation from '../navigation/navigation_slice'
+import navigation from './navigation/navigation_slice'
 
 export const globalStore = configureStore({
   reducer: combineReducers({

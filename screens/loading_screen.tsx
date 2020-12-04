@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {View, Text} from 'react-native'
 import {useDispatch, useSelector} from 'react-redux'
-import {GlobalState, GlobalStoreDispatch} from '../common/global_store/store'
+import {GlobalState, GlobalStoreDispatch} from '../common/global_store'
 import {setCurrentScreen} from '../common/navigation/navigation_slice'
 import {ScreenName} from '../common/navigation/screen_name'
 
