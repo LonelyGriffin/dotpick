@@ -7,19 +7,17 @@ import paintingPictureJson from './assets/images/watermelon/painting.json'
 import {Menu} from './components/menu'
 import 'react-native-gesture-handler'
 import {NavigationContainer} from '@react-navigation/native'
-import * as ScreenOrientation from 'expo-screen-orientation'
 import {RootStack} from './navigation/root_stack'
+import {ScreenOrientation} from './components/screen_orientation'
+import {OrientationLock} from 'expo-screen-orientation'
 
 const currentPicture: Picture = paintingPictureJson as any
 
 export default function App() {
-  useEffect(() => {
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE)
-  }, [])
-
   return (
     <NavigationContainer>
       <StatusBar hidden />
+      <ScreenOrientation lockScreenWithOrientation={OrientationLock.LANDSCAPE} />
       <RootStack.Navigator initialRouteName='Picture'>
         <RootStack.Screen name='Home' component={Menu} />
         <RootStack.Screen
