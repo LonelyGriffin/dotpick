@@ -1,6 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React from 'react'
 import {StatusBar} from 'expo-status-bar'
-import {SafeAreaView} from 'react-native'
 import {PictureView} from './components/picture_view'
 import {Picture} from './core/picture'
 import paintingPictureJson from './assets/images/watermelon/painting.json'
