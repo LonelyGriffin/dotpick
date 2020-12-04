@@ -1,4 +1,12 @@
 import React from 'react'
-import {View, FlatList, Text, StyleSheet} from 'react-native'
+import {View, Text} from 'react-native'
 
-const LoadingScreen = () => {}
+const LoadingScreen = () => {
+  return (
+    <View>
+      <Text>Loading...</Text>
+    </View>
+  )
+}
+
+export default LoadingScreen
