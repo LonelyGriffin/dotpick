@@ -1,7 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack'
 import {Picture} from '../core/picture'
 
-export type RootStackParamList = {
+export type ScreensParams = {
   Loading: undefined
   Home: undefined
   Picture: {
@@ -11,4 +11,4 @@ export type RootStackParamList = {
   }
 }
 
-export const RootStack = createStackNavigator<RootStackParamList>()
+export const RootStack = createStackNavigator<ScreensParams>()
