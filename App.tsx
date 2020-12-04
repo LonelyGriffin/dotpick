@@ -8,18 +8,7 @@ import {Menu} from './components/menu'
 import 'react-native-gesture-handler'
 import {NavigationContainer} from '@react-navigation/native'
 import * as ScreenOrientation from 'expo-screen-orientation'
-import {createStackNavigator} from '@react-navigation/stack'
-
-type RootStackParamList = {
-  Home: undefined
-  Picture: {
-    picture: Picture
-    pictureLayerIndex: number
-    onNextPictureLayer: () => void
-  }
-}
-
-const RootStack = createStackNavigator<RootStackParamList>()
+import {RootStack} from './navigation/root_stack'
 
 const currentPicture: Picture = paintingPictureJson as any
 
