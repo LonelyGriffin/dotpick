@@ -5,7 +5,7 @@ import {Picture} from './core/picture'
 import paintingPictureJson from './assets/images/watermelon/painting.json'
 import {Menu} from './components/menu'
 import {NavigationContainer} from '@react-navigation/native'
-import {RootStack} from './common/navigation/root_stack'
+import {Navigator} from './common/navigation/navigator'
 import {ScreenOrientation} from './components/screen_orientation'
 import {OrientationLock} from 'expo-screen-orientation'
 import LoadingScreen from './screens/loading_screen'
@@ -21,22 +21,22 @@ export default function App() {
       <Provider store={globalStore}>
         <StatusBar hidden />
         <ScreenOrientation lockScreen={OrientationLock.LANDSCAPE} />
-        <RootStack.Navigator
+        <Navigator.Navigator
           initialRouteName={ScreenName.Loading}
           screenOptions={{
             headerShown: false
           }}
         >
-          <RootStack.Screen name={ScreenName.Loading} component={LoadingScreen} />
-          <RootStack.Screen name={ScreenName.Home} component={Menu} />
-          <RootStack.Screen
+          <Navigator.Screen name={ScreenName.Loading} component={LoadingScreen} />
+          <Navigator.Screen name={ScreenName.Home} component={Menu} />
+          <Navigator.Screen
             name={ScreenName.Picture}
             component={PictureView}
             initialParams={{
               picture: currentPicture
             }}
           />
-        </RootStack.Navigator>
+        </Navigator.Navigator>
       </Provider>
     </NavigationContainer>
   )
