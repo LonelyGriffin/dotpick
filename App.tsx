@@ -9,6 +9,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import {RootStack} from './navigation/root_stack'
 import {ScreenOrientation} from './components/screen_orientation'
 import {OrientationLock} from 'expo-screen-orientation'
+import LoadingScreen from './screens/loading_screen'
 
 const currentPicture: Picture = paintingPictureJson as any
 
@@ -18,6 +19,7 @@ export default function App() {
       <StatusBar hidden />
       <ScreenOrientation lockScreen={OrientationLock.LANDSCAPE} />
       <RootStack.Navigator initialRouteName='Picture'>
+        <RootStack.Screen name='Loading' component={LoadingScreen} />
         <RootStack.Screen name='Home' component={Menu} />
         <RootStack.Screen
           name='Picture'
