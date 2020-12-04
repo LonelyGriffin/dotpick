@@ -1,4 +1,4 @@
-export const enum ScreenName {
+export enum ScreenName {
   Loading = 'Loading',
   Home = 'Home',
   Picture = 'Picture'
