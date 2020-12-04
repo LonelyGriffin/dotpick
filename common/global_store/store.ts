@@ -1,8 +1,11 @@
-import {configureStore} from '@reduxjs/toolkit'
-import {globalReducer} from './global_reducer'
+import {combineReducers, configureStore} from '@reduxjs/toolkit'
+import navigation from '../navigation/navigation_slice'
 
 export const globalStore = configureStore({
-  reducer: globalReducer
+  reducer: combineReducers({
+    navigation
+  })
 })
 
+export type GlobalState = ReturnType<typeof globalStore.getState>
 export type GlobalStoreDispatch = typeof globalStore.dispatch
