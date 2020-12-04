@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack'
-import {Picture} from '../core/picture'
+import {Picture} from '../../core/picture'
 import {ScreenName} from './screen_name'
 
 export type ScreensParams = {
