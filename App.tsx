@@ -10,30 +10,34 @@ import {ScreenOrientation} from './components/screen_orientation'
 import {OrientationLock} from 'expo-screen-orientation'
 import LoadingScreen from './screens/loading_screen'
 import {ScreenName} from './navigation/screen_name'
+import {Provider} from 'react-redux'
+import {globalStore} from './common/global_store/store'
 
 const currentPicture: Picture = paintingPictureJson as any
 
 export default function App() {
   return (
     <NavigationContainer>
-      <StatusBar hidden />
-      <ScreenOrientation lockScreen={OrientationLock.LANDSCAPE} />
-      <RootStack.Navigator
-        initialRouteName={ScreenName.Loading}
-        screenOptions={{
-          headerShown: false
-        }}
-      >
-        <RootStack.Screen name={ScreenName.Loading} component={LoadingScreen} />
-        <RootStack.Screen name={ScreenName.Home} component={Menu} />
-        <RootStack.Screen
-          name={ScreenName.Picture}
-          component={PictureView}
-          initialParams={{
-            picture: currentPicture
+      <Provider store={globalStore}>
+        <StatusBar hidden />
+        <ScreenOrientation lockScreen={OrientationLock.LANDSCAPE} />
+        <RootStack.Navigator
+          initialRouteName={ScreenName.Loading}
+          screenOptions={{
+            headerShown: false
           }}
-        />
-      </RootStack.Navigator>
+        >
+          <RootStack.Screen name={ScreenName.Loading} component={LoadingScreen} />
+          <RootStack.Screen name={ScreenName.Home} component={Menu} />
+          <RootStack.Screen
+            name={ScreenName.Picture}
+            component={PictureView}
+            initialParams={{
+              picture: currentPicture
+            }}
+          />
+        </RootStack.Navigator>
+      </Provider>
     </NavigationContainer>
   )
 }
