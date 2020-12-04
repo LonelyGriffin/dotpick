@@ -2,14 +2,14 @@ import {useEffect} from 'react'
 import {OrientationLock, lockAsync} from 'expo-screen-orientation'
 
 type Props = {
-  lockScreenWithOrientation?: OrientationLock
+  lockScreen?: OrientationLock
 }
 
 export const ScreenOrientation = (props: Props) => {
   useEffect(() => {
-    if (props.lockScreenWithOrientation) {
-      lockAsync(props.lockScreenWithOrientation)
+    if (props.lockScreen) {
+      lockAsync(props.lockScreen)
     }
-  }, [props.lockScreenWithOrientation])
+  }, [props.lockScreen])
   return null
 }
