@@ -9,6 +9,7 @@ import {RootStack} from './navigation/root_stack'
 import {ScreenOrientation} from './components/screen_orientation'
 import {OrientationLock} from 'expo-screen-orientation'
 import LoadingScreen from './screens/loading_screen'
+import {ScreenName} from './navigation/screen_name'
 
 const currentPicture: Picture = paintingPictureJson as any
 
@@ -18,15 +19,15 @@ export default function App() {
       <StatusBar hidden />
       <ScreenOrientation lockScreen={OrientationLock.LANDSCAPE} />
       <RootStack.Navigator
-        initialRouteName='Loading'
+        initialRouteName={ScreenName.Loading}
         screenOptions={{
           headerShown: false
         }}
       >
-        <RootStack.Screen name='Loading' component={LoadingScreen} />
-        <RootStack.Screen name='Home' component={Menu} />
+        <RootStack.Screen name={ScreenName.Loading} component={LoadingScreen} />
+        <RootStack.Screen name={ScreenName.Home} component={Menu} />
         <RootStack.Screen
-          name='Picture'
+          name={ScreenName.Picture}
           component={PictureView}
           initialParams={{
             picture: currentPicture

@@ -1,10 +1,11 @@
 import {createStackNavigator} from '@react-navigation/stack'
 import {Picture} from '../core/picture'
+import {ScreenName} from './screen_name'
 
 export type ScreensParams = {
-  Loading: undefined
-  Home: undefined
-  Picture: {
+  [ScreenName.Loading]: undefined
+  [ScreenName.Home]: undefined
+  [ScreenName.Picture]: {
     picture: Picture
     pictureLayerIndex: number
     onNextPictureLayer: () => void
