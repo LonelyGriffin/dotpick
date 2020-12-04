@@ -18,7 +18,7 @@ export default function App() {
     <NavigationContainer>
       <StatusBar hidden />
       <ScreenOrientation lockScreen={OrientationLock.LANDSCAPE} />
-      <RootStack.Navigator initialRouteName='Picture'>
+      <RootStack.Navigator initialRouteName='Loading'>
         <RootStack.Screen name='Loading' component={LoadingScreen} />
         <RootStack.Screen name='Home' component={Menu} />
         <RootStack.Screen
