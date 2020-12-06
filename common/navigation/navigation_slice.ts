@@ -35,12 +35,5 @@ const navigationSlice = createSlice({
     }
   }
 })
-const logReducerDecorator = <S, A extends Action<any>>(reducer: Reducer<S, A>) => {
-  return (state: S, action: A) => {
-    const newState = reducer(state, action)
-    console.log(action, newState)
-    return newState
-  }
-}
 export const {setNavigationState, queueNavigationAction, unqueueNavigationAction} = navigationSlice.actions
-export default logReducerDecorator(navigationSlice.reducer) as typeof navigationSlice.reducer
+export default navigationSlice.reducer
