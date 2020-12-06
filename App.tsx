@@ -12,6 +12,7 @@ import LoadingScreen from './screens/loading_screen'
 import {ScreenName} from './common/navigation/screen_name'
 import {Provider} from 'react-redux'
 import {globalStore} from './common/global_store'
+import {Bootstrap} from './common/bootstrap/bootstrap_component'
 
 const currentPicture: Picture = paintingPictureJson as any
 
@@ -37,6 +38,7 @@ export default function App() {
             }}
           />
         </Navigator.Navigator>
+        <Bootstrap />
       </Provider>
     </NavigationContainer>
   )
