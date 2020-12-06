@@ -1,24 +1,47 @@
-import {createSlice} from '@reduxjs/toolkit'
-import {ScreenName} from './screen_name'
+import {Action, createSlice, Reducer} from '@reduxjs/toolkit'
 import {PayloadAction} from '@reduxjs/toolkit'
+import {NavigationState as ReactNavigationState, CommonNavigationAction} from '@react-navigation/core'
+import {ScreensParams} from './screens_params'
+import {act} from 'react-test-renderer'
 
 export type NavigationState = {
-  currentScreen: ScreenName
+  actionsForExecutionQueue: CommonNavigationAction[]
+  navigationState: ReactNavigationState<ScreensParams>
 }
 
 const initialState: NavigationState = {
-  currentScreen: ScreenName.Loading
+  actionsForExecutionQueue: [],
+  navigationState: {
+    key: 'INITIAL',
+    index: -1,
+    routeNames: [],
+    routes: [],
+    stale: false,
+    type: 'INITIAL'
+  }
 }
 
 const navigationSlice = createSlice({
   name: 'navigation',
-  initialState,
+  initialState: initialState,
   reducers: {
-    setCurrentScreen(state: NavigationState, action: PayloadAction<ScreenName>) {
-      state.currentScreen = action.payload
+    setNavigationState(state, action: PayloadAction<ReactNavigationState<ScreensParams>>) {
+      state.navigationState = action.payload
+    },
+    queueNavigationAction(state, action: PayloadAction<CommonNavigationAction>) {
+      state.actionsForExecutionQueue.push(action.payload)
+    },
+    unqueueNavigationAction(state) {
+      state.actionsForExecutionQueue.splice(0, 1)
     }
   }
 })
-
-export const {setCurrentScreen} = navigationSlice.actions
-export default navigationSlice.reducer
+const logReducerDecorator = <S, A extends Action<any>>(reducer: Reducer<S, A>) => {
+  return (state: S, action: A) => {
+    const newState = reducer(state, action)
+    console.log(action, newState)
+    return newState
+  }
+}
+export const {setNavigationState, queueNavigationAction, unqueueNavigationAction} = navigationSlice.actions
+export default logReducerDecorator(navigationSlice.reducer) as typeof navigationSlice.reducer
