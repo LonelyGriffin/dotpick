@@ -2,7 +2,6 @@ import {Action, createSlice, Reducer} from '@reduxjs/toolkit'
 import {PayloadAction} from '@reduxjs/toolkit'
 import {NavigationState as ReactNavigationState, CommonNavigationAction} from '@react-navigation/core'
 import {ScreensParams} from './screens_params'
-import {act} from 'react-test-renderer'
 
 export type NavigationState = {
   actionsForExecutionQueue: CommonNavigationAction[]
