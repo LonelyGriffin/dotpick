@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react'
-import {View, Text} from 'react-native'
+import {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
 import {GlobalStoreDispatch} from '../global_store'
 import {bootstrap} from './bootstrap_slice'

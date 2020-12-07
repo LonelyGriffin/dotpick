@@ -1,6 +1,7 @@
 import React from 'react'
 import {View, FlatList, Text, StyleSheet} from 'react-native'
 import {ScrollView} from 'react-native-gesture-handler'
+import {NavigationStateSynchronizer} from '../../common/navigation/navigation_store_synchronizer'
 import {Header} from '../header'
 
 type Props = {}
@@ -31,6 +32,7 @@ const Data = [
 export const Menu = (props: Props) => {
   return (
     <View style={styles.fullSize}>
+      <NavigationStateSynchronizer />
       <Header />
       <ScrollView horizontal>
         <View style={styles.list}>
