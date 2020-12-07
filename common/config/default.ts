@@ -5,5 +5,6 @@ export const DEFAULT_CONFIG: Config = {
     baseUrl: 'localhost',
     port: 5555
   },
+  dynamicConfigUrl: 'http://localhost:8000/runtime_config.json',
   storyIdsForPreloading: ['abc']
 }

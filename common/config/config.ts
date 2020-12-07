@@ -3,5 +3,6 @@ export type Config = {
     baseUrl: string
     port: number
   }
+  dynamicConfigUrl: string
   storyIdsForPreloading: string[]
 }
