@@ -2,7 +2,7 @@ import React from 'react'
 import {View, FlatList, Text, StyleSheet} from 'react-native'
 import {ScrollView} from 'react-native-gesture-handler'
 import {NavigationStateSynchronizer} from '../../common/navigation/navigation_store_synchronizer'
-import {Header} from '../header'
+import {Header} from '../../components/header'
 
 type Props = {}
 
