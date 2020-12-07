@@ -18,7 +18,7 @@ export const NavigationStateSynchronizer = () => {
   useEffect(() => {
     if (actionsForExecutionQueue.length > 0) {
       navigation.dispatch(actionsForExecutionQueue[0])
-      dispatch(unqueueNavigationAction)
+      dispatch(unqueueNavigationAction())
     }
   }, [actionsForExecutionQueue])
 
