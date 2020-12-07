@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, FlatList, Text, StyleSheet} from 'react-native'
 import {ScrollView} from 'react-native-gesture-handler'
-import {NavigationStateSynchronizer} from '../../common/navigation/navigation_store_synchronizer'
+import {Screen} from '../../common/layout/Screen'
 import {Header} from '../../common/components/header'
 
 type Props = {}
@@ -31,17 +31,18 @@ const Data = [
 
 export const Menu = (props: Props) => {
   return (
-    <View style={styles.fullSize}>
-      <NavigationStateSynchronizer />
-      <Header />
-      <ScrollView horizontal>
-        <View style={styles.list}>
-          {Data.map((item) => (
-            <View key={item.id} style={styles.item}></View>
-          ))}
-        </View>
-      </ScrollView>
-    </View>
+    <Screen>
+      <View style={styles.fullSize}>
+        <Header />
+        <ScrollView horizontal>
+          <View style={styles.list}>
+            {Data.map((item) => (
+              <View key={item.id} style={styles.item}></View>
+            ))}
+          </View>
+        </ScrollView>
+      </View>
+    </Screen>
   )
 }
 

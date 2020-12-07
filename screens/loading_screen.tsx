@@ -1,13 +1,12 @@
 import React from 'react'
-import {View, Text} from 'react-native'
-import {NavigationStateSynchronizer} from '../common/navigation/navigation_store_synchronizer'
+import {Text} from 'react-native'
+import {Screen} from '../common/layout/Screen'
 
 const LoadingScreen = () => {
   return (
-    <View>
-      <NavigationStateSynchronizer />
+    <Screen>
       <Text>{`Loading...`}</Text>
-    </View>
+    </Screen>
   )
 }
 
