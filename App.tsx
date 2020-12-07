@@ -1,6 +1,6 @@
 import React from 'react'
 import {StatusBar} from 'expo-status-bar'
-import {PictureView} from './components/picture_view'
+import {PictureView} from './screens/picture_view'
 import {Picture} from './core/picture'
 import paintingPictureJson from './assets/images/watermelon/painting.json'
 import {Menu} from './screens/menu'
