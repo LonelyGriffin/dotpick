@@ -1,10 +1,13 @@
 import {Action, createSlice, Reducer} from '@reduxjs/toolkit'
 import {PayloadAction} from '@reduxjs/toolkit'
 import {NavigationState as ReactNavigationState, CommonNavigationAction} from '@react-navigation/core'
+import {StackActionType} from '@react-navigation/native'
 import {ScreensParams} from './screens_params'
 
+type NavigationAction = CommonNavigationAction | StackActionType
+
 export type NavigationState = {
-  actionsForExecutionQueue: CommonNavigationAction[]
+  actionsForExecutionQueue: NavigationAction[]
   navigationState: ReactNavigationState<ScreensParams>
 }
 
@@ -27,7 +30,7 @@ const navigationSlice = createSlice({
     setNavigationState(state, action: PayloadAction<ReactNavigationState<ScreensParams>>) {
       state.navigationState = action.payload
     },
-    queueNavigationAction(state, action: PayloadAction<CommonNavigationAction>) {
+    queueNavigationAction(state, action: PayloadAction<NavigationAction>) {
       state.actionsForExecutionQueue.push(action.payload)
     },
     unqueueNavigationAction(state) {
