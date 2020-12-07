@@ -1,4 +1,4 @@
-import {Action, createSlice, Reducer} from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
 import {PayloadAction} from '@reduxjs/toolkit'
 import {NavigationState as ReactNavigationState, CommonNavigationAction} from '@react-navigation/core'
 import {StackActionType} from '@react-navigation/native'
