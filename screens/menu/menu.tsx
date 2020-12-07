@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, FlatList, Text, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 import {ScrollView} from 'react-native-gesture-handler'
 import {Screen} from '../../common/layout/Screen'
 import {Header} from '../../common/layout/header'
