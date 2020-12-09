@@ -1,4 +1,4 @@
-interface IResult<T, E> {
+export interface IResult<T, E = any> {
   readonly fail: boolean
   readonly success: boolean
   readonly error?: E

@@ -3,7 +3,8 @@ import {Box} from './box'
 import {Polygon} from './polygon'
 
 export type Picture = {
-  box: Box
+  id: string
+  box: Box // TODO: убрать - вычисляемое св-во
   layers: PictureLayer[]
 }
 export type PictureLayer = Polygon[]

@@ -1,5 +1,6 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import navigation from './navigation/navigation_slice'
+import stories from './story/stories_slice'
 import {createEpicMiddleware} from 'redux-observable'
 import {rootEpic} from './root_epic'
 
@@ -7,7 +8,8 @@ const epicMiddleware = createEpicMiddleware()
 
 export const globalStore = configureStore({
   reducer: combineReducers({
-    navigation
+    navigation,
+    stories
   }),
   middleware: [epicMiddleware]
 })

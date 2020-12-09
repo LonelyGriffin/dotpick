@@ -1,8 +1,7 @@
 export type Config = {
-  api: {
-    baseUrl: string
-    port: number
-  }
+  api: string
   dynamicConfigUrl: string
   storyIdsForPreloading: string[]
+  dbName: string
+  storiesDBTable: string
 }
