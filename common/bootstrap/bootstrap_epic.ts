@@ -5,7 +5,7 @@ import {filter, switchMap, delay, tap} from 'rxjs/operators'
 import {loadConfig} from '../config'
 import {queueNavigationAction} from '../navigation/navigation_slice'
 import {ScreenName} from '../navigation/screen_name'
-import {loadStories} from '../story/ load_stories'
+import {loadStories} from '../story/load_stories'
 import {bootstrap} from './bootstrap_slice'
 import {setStories} from '../story/stories_slice'
 
