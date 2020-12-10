@@ -1,20 +1,17 @@
 import {IResult, Result, ResultError} from '../../core/result'
 import {Story} from '../../core/story'
 import {Config} from '../config'
-import {Database, SQLTransaction, SQLResultSet} from 'expo-sqlite'
 import memoize from 'lodash-es/memoize'
-import {removeCachedStories} from './remove_cached_stories'
-import {setStoriesToCache} from './set_stories_to_cache'
-import {uniq} from 'ramda'
-import {STORIES} from './cache'
+import {DataBaseManager} from '../db'
+import uniq from 'lodash-es/uniq'
 
 type StoryServerInvalidationState = {
   id: string
   timestamp: string
 }
 
-export const loadStories = async (config: Config, db: Database): Promise<IResult<Story[], any>> => {
-  const cachedStories = await loadCachedStories(config, db)
+export const loadStories = async (config: Config, db: DataBaseManager): Promise<IResult<Story[], any>> => {
+  const cachedStories = await db.getStories()
   console.log('cachedStories', cachedStories)
   if (cachedStories.fail) {
     return new ResultError<Story[]>(new Error('stories loading failed'))
@@ -28,14 +25,13 @@ export const loadStories = async (config: Config, db: Database): Promise<IResult
 
   const invalidationResult = invalidateStories(cachedStories.unwrap(), storiesServerInvalidationState.unwrap())
   console.log('invalidationResult', invalidationResult)
-  const isRemoved = await removeCachedStories(invalidationResult.needRemove)
+  const isRemoved = await db.deleteStories(invalidationResult.needRemove)
   const isNeedRemove = (ids: string[]) => (story: Story) => ids.findIndex((id) => id === story.id) < 0
-  const storiesAfterRemoving =
-    isRemoved.success && isRemoved.unwrap()
-      ? cachedStories.unwrap().filter(isNeedRemove(invalidationResult.needRemove))
-      : cachedStories.unwrap()
+  const storiesAfterRemoving = isRemoved.success
+    ? cachedStories.unwrap().filter(isNeedRemove(invalidationResult.needRemove))
+    : cachedStories.unwrap()
 
-  console.log('storiesAfterRemoving', storiesAfterRemoving)
+  console.log('storiesAfterRemoving', storiesAfterRemoving, isRemoved)
 
   if (invalidationResult.needLoad.length === 0 && invalidationResult.needUpdate.length === 0) {
     return new Result(storiesAfterRemoving)
@@ -47,9 +43,10 @@ export const loadStories = async (config: Config, db: Database): Promise<IResult
     return new Result(storiesAfterRemoving)
   }
 
-  const isSet = await setStoriesToCache(fixedStories.unwrap())
+  const isSet = await db.setStories(fixedStories.unwrap())
+  console.log('isSet', isSet)
 
-  if (isSet.fail || !isSet.unwrap()) {
+  if (isSet.fail) {
     return new Result(storiesAfterRemoving)
   }
 
@@ -59,31 +56,6 @@ export const loadStories = async (config: Config, db: Database): Promise<IResult
     .concat(fixedStories.unwrap())
 
   return new Result(storiesAfterInvalidation)
-}
-
-const loadCachedStories = async (config: Config, db: Database) => {
-  return new Promise<IResult<Story[]>>((resolve) => {
-    resolve(new Result(STORIES.slice()))
-    // const error = () => resolve(new ResultError<Story[]>(new Error('Load cached stories transaction failed')))
-    // const success = (_: any, result: SQLResultSet) => {
-    //   const length = result.rows.length
-    //   const stories: Story[] = []
-    //   for (let i = 0; i < length; i++) {
-    //     const story: Story | null = result.rows.item(i)
-
-    //     if (story) {
-    //       stories.push(story)
-    //     }
-
-    //     resolve(new Result(stories))
-    //   }
-    // }
-    // const callback = (tx: SQLTransaction) => {
-    //   tx.executeSql('SELECT * FROM ?', [config.storiesDBTable], success)
-    // }
-
-    // db.transaction(callback, error)
-  })
 }
 
 const loadStoriesServerInvalidationState = async (config: Config) => {

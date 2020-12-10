@@ -6,9 +6,12 @@ import {Header} from '../../common/layout/header'
 import {useSelector} from 'react-redux'
 import {GlobalState} from '../../common/global_store'
 
-type Props = {}
+type Props = {
+  title: string
+  previewImgSrc: string
+}
 
-export const Menu = (props: Props) => {
+export const StoryPreview = (props: Props) => {
   const stories = useSelector((state: GlobalState) => state.stories)
 
   return (
