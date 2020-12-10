@@ -18,7 +18,7 @@ export const Menu = (props: Props) => {
     <Screen>
       <View style={styles.fullSize}>
         <ImageBackground source={backgroundImgSrc} style={styles.bg}>
-          <Header />
+          <Header showBrushFace showMenuButtons message={'Что рассказать?'} />
           <ScrollView horizontal>
             <View style={styles.list}>
               {stories.map((item) => (
