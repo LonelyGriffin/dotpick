@@ -13,10 +13,22 @@ import {ScreenName} from './common/navigation/screen_name'
 import {Provider} from 'react-redux'
 import {globalStore} from './common/global_store'
 import {Bootstrap} from './common/bootstrap/bootstrap_component'
+import {AppLoading} from 'expo'
+import {useFonts} from 'expo-font'
 
 const currentPicture: Picture = paintingPictureJson as any
 
 export default function App() {
+  // TODO: Обработать ошибки. Внести в бутстрапинг
+  let [fontsLoaded] = useFonts({
+    'Roboto-Regular': require('./common/assets/font/Roboto/Roboto-Regular.ttf')
+    // 'Roboto-Bold': require('./common/assets/font/Roboto/Roboto-Bold.ttf')
+  })
+
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
+
   return (
     <NavigationContainer>
       <Provider store={globalStore}>
