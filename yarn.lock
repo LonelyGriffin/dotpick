@@ -1798,10 +1798,10 @@
   dependencies:
     ts-toolbelt "^6.15.1"
 
-"@types/react-native@~0.62.13":
-  version "0.62.18"
-  resolved "http://npm.yandex-team.ru/@types%2freact-native/-/react-native-0.62.18.tgz#ad63691e7c44edef2beeb6af52b2eb942c3ed8a1"
-  integrity sha512-7QfU8EzIYxYqeXpPf8QNv2xi8hrePlgTbRATRo+plRSdVfJu7N6sAXqrFxKJp6bGLvp82GV1gczl93gqiAfXPA==
+"@types/react-native@^0.63.37":
+  version "0.63.37"
+  resolved "http://npm.yandex-team.ru/@types%2freact-native/-/react-native-0.63.37.tgz#c43df90c9d3cc082a97a49a53e989de26cb8ab45"
+  integrity sha512-xr9SZG7tQQBKT6840tAGaWEC65D2gjyxZtuZxz631UgeW1ofItuu9HMVhoyYqot2hRSa6Q4YC8FYkRVUpM53/w==
   dependencies:
     "@types/react" "*"
 
