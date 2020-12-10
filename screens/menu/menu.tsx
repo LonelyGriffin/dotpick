@@ -5,6 +5,7 @@ import {Screen} from '../../common/layout/Screen'
 import {Header} from '../../common/layout/header'
 import {useSelector} from 'react-redux'
 import {GlobalState} from '../../common/global_store'
+import {StoryPreview} from './story_preview'
 
 const backgroundImgSrc = require('../../common/assets/img/background.jpg')
 
@@ -14,6 +15,8 @@ export const Menu = (props: Props) => {
   const stories = useSelector((state: GlobalState) => state.stories)
   const config = useSelector((state: GlobalState) => state.config)
 
+  console.log('render', stories)
+
   return (
     <Screen>
       <View style={styles.fullSize}>
@@ -22,7 +25,7 @@ export const Menu = (props: Props) => {
           <ScrollView horizontal>
             <View style={styles.list}>
               {stories.map((item) => (
-                <View key={item.id} style={styles.item}></View>
+                <StoryPreview title={item.title} previewImage={item.previewImage} key={item.id} />
               ))}
             </View>
           </ScrollView>
@@ -45,9 +48,9 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     display: 'flex',
-    flexDirection: 'column',
-    padding: 20,
-    flexWrap: 'wrap'
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingRight: 32
   },
   item: {
     width: 72,

@@ -1,53 +1,76 @@
 import React from 'react'
-import {View, StyleSheet} from 'react-native'
-import {ScrollView} from 'react-native-gesture-handler'
-import {Screen} from '../../common/layout/Screen'
-import {Header} from '../../common/layout/header'
-import {useSelector} from 'react-redux'
-import {GlobalState} from '../../common/global_store'
+import {View, StyleSheet, Text, Image} from 'react-native'
 
 type Props = {
   title: string
-  previewImgSrc: string
+  previewImage: string
 }
 
 export const StoryPreview = (props: Props) => {
-  const stories = useSelector((state: GlobalState) => state.stories)
-
   return (
-    <Screen>
-      <View style={styles.fullSize}>
-        <Header />
-        <ScrollView horizontal>
-          <View style={styles.list}>
-            {stories.map((item) => (
-              <View key={item.id} style={styles.item}></View>
-            ))}
-          </View>
-        </ScrollView>
+    <View style={styles.root}>
+      <View style={styles.coverContainer}>
+        <View style={styles.previewCover}>
+          <Image source={{uri: props.previewImage}} style={styles.previewImg} />
+        </View>
       </View>
-    </Screen>
+      <View style={styles.messageContainer}>
+        <View style={styles.message}>
+          <Text style={styles.messageText}>{props.title}</Text>
+        </View>
+      </View>
+    </View>
   )
 }
 
+const SIZE = 160
+const MESSAGE_HEIGHT = 28
+
 const styles = StyleSheet.create({
-  fullSize: {
-    width: '100%',
-    height: '100%'
+  root: {
+    width: SIZE,
+    height: SIZE,
+    marginLeft: 32
   },
-  list: {
-    backgroundColor: '#E5E5E5',
+  messageContainer: {
     width: '100%',
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    padding: 20,
-    flexWrap: 'wrap'
+    height: MESSAGE_HEIGHT,
+    position: 'absolute',
+    top: -MESSAGE_HEIGHT / 2,
+    left: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10000
   },
-  item: {
-    width: 72,
-    height: 72,
-    margin: 20,
-    backgroundColor: '#C4C4C4'
+  message: {
+    height: MESSAGE_HEIGHT,
+    backgroundColor: '#ffffff',
+    borderRadius: MESSAGE_HEIGHT / 2,
+    borderColor: '#911394',
+    borderWidth: 1,
+    borderStyle: 'solid'
+  },
+  messageText: {
+    color: '#911394',
+    fontFamily: 'Roboto-Regular',
+    fontSize: 16,
+    marginLeft: 16,
+    marginRight: 16
+  },
+  coverContainer: {
+    width: SIZE,
+    height: SIZE,
+    borderRadius: 16
+  },
+  previewCover: {
+    width: SIZE,
+    height: SIZE,
+    borderRadius: 16,
+    overflow: 'hidden'
+  },
+  previewImg: {
+    width: SIZE,
+    height: SIZE
   }
 })

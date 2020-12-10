@@ -3,4 +3,5 @@ export type Story = {
   timestamp: string
   title: string
   description: string
+  previewImage: string
 }

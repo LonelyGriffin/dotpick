@@ -5,7 +5,7 @@ import {Story} from '../core/story'
 export class DataBaseManager {
   private db: Database
   constructor() {
-    this.db = openDatabase('cache')
+    this.db = openDatabase('cache1')
   }
 
   async init() {
@@ -21,7 +21,8 @@ export class DataBaseManager {
             id TEXT PRIMARY KEY,
             timestamp TEXT NOT NULL,
             title TEXT NOT NULL,
-            description TEXT NOT NULL
+            description TEXT NOT NULL,
+            previewImage TEXT NOT NULL
           );
         `,
           [],
@@ -71,11 +72,11 @@ export class DataBaseManager {
       const callback = (tx: SQLTransaction) => {
         const sql = []
 
-        sql.push('INSERT OR REPLACE INTO stories (id, timestamp, title, description) VALUES')
+        sql.push('INSERT OR REPLACE INTO stories (id, timestamp, title, description, previewImage) VALUES')
 
-        sql.push(stories.map((_) => '(?, ?, ?, ?)').join(',\n'))
+        sql.push(stories.map((_) => '(?, ?, ?, ?, ?)').join(',\n'))
         const sqlArgs = stories.reduce((result, story) => {
-          result.push(story.id, story.timestamp, story.title, story.description)
+          result.push(story.id, story.timestamp, story.title, story.description, story.previewImage)
           return result
         }, [] as any[])
 
