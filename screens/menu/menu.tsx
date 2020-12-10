@@ -1,27 +1,32 @@
 import React from 'react'
-import {View, StyleSheet} from 'react-native'
+import {View, StyleSheet, ImageBackground} from 'react-native'
 import {ScrollView} from 'react-native-gesture-handler'
 import {Screen} from '../../common/layout/Screen'
 import {Header} from '../../common/layout/header'
 import {useSelector} from 'react-redux'
 import {GlobalState} from '../../common/global_store'
 
+const backgroundImgSrc = require('../../common/assets/img/background.jpg')
+
 type Props = {}
 
 export const Menu = (props: Props) => {
   const stories = useSelector((state: GlobalState) => state.stories)
+  const config = useSelector((state: GlobalState) => state.config)
 
   return (
     <Screen>
       <View style={styles.fullSize}>
-        <Header />
-        <ScrollView horizontal>
-          <View style={styles.list}>
-            {stories.map((item) => (
-              <View key={item.id} style={styles.item}></View>
-            ))}
-          </View>
-        </ScrollView>
+        <ImageBackground source={backgroundImgSrc} style={styles.bg}>
+          <Header />
+          <ScrollView horizontal>
+            <View style={styles.list}>
+              {stories.map((item) => (
+                <View key={item.id} style={styles.item}></View>
+              ))}
+            </View>
+          </ScrollView>
+        </ImageBackground>
       </View>
     </Screen>
   )
@@ -32,8 +37,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%'
   },
+  bg: {
+    flex: 1,
+    resizeMode: 'cover'
+  },
   list: {
-    backgroundColor: '#E5E5E5',
     width: '100%',
     flex: 1,
     display: 'flex',
