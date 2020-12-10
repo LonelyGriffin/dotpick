@@ -8,6 +8,7 @@ import {loadStories} from '../story/load_stories'
 import {bootstrap} from './bootstrap_slice'
 import {setStories} from '../story/stories_slice'
 import {DataBaseManager} from '../db'
+import {setConfig} from '../config/config_slice'
 
 export const bootstrapEpic = (action$: Observable<Action>) =>
   action$.pipe(
@@ -36,6 +37,7 @@ const performBootstraping = async (): Promise<Observable<Action>> => {
     isLoadedResources: false
   }))
   return of(
+    setConfig(config),
     setStories(storyStates),
     queueNavigationAction({
       type: 'REPLACE',
