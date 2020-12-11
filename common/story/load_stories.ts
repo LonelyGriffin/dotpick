@@ -12,10 +12,15 @@ type StoryServerInvalidationState = {
 
 export const loadStories = async (config: Config, db: DataBaseManager): Promise<IResult<Story[], any>> => {
   const cachedStories = await db.getStories()
-  console.log('cachedStories', cachedStories)
+  console.log('cachedStories loaded')
   if (cachedStories.fail) {
     return new ResultError<Story[]>(new Error('stories loading failed'))
   }
+
+  console.log(
+    'cachedStories',
+    cachedStories.unwrap().map((s) => ({...s, previewImage: s.previewImage.slice(0, 10)}))
+  )
 
   const storiesServerInvalidationState = await loadStoriesServerInvalidationState(config)
 
@@ -30,8 +35,10 @@ export const loadStories = async (config: Config, db: DataBaseManager): Promise<
   const storiesAfterRemoving = isRemoved.success
     ? cachedStories.unwrap().filter(isNeedRemove(invalidationResult.needRemove))
     : cachedStories.unwrap()
-
-  console.log('storiesAfterRemoving', storiesAfterRemoving, isRemoved)
+  console.log(
+    'storiesAfterRemoving',
+    storiesAfterRemoving.map((s) => ({...s, previewImage: s.previewImage.slice(0, 10)}))
+  )
 
   if (invalidationResult.needLoad.length === 0 && invalidationResult.needUpdate.length === 0) {
     return new Result(storiesAfterRemoving)
@@ -43,6 +50,11 @@ export const loadStories = async (config: Config, db: DataBaseManager): Promise<
     return new Result(storiesAfterRemoving)
   }
 
+  console.log(
+    'fixedStories',
+    fixedStories.unwrap().map((s) => ({...s, previewImage: s.previewImage.slice(0, 10)}))
+  )
+
   const isSet = await db.setStories(fixedStories.unwrap())
   console.log('isSet', isSet)
 
@@ -50,9 +62,9 @@ export const loadStories = async (config: Config, db: DataBaseManager): Promise<
     return new Result(storiesAfterRemoving)
   }
 
-  const isInvalid = (ids: string[]) => (story: Story) => ids.findIndex((id) => id === story.id) >= 0
+  const isNotInvalid = (ids: string[]) => (story: Story) => ids.findIndex((id) => id === story.id) < 0
   const storiesAfterInvalidation = storiesAfterRemoving
-    .filter(isInvalid(fixedStories.unwrap().map((x) => x.id)))
+    .filter(isNotInvalid(fixedStories.unwrap().map((x) => x.id)))
     .concat(fixedStories.unwrap())
 
   return new Result(storiesAfterInvalidation)
