@@ -22,11 +22,8 @@ const performBootstraping = async (): Promise<Observable<Action>> => {
 
   const db = new DataBaseManager()
 
-  console.log('start init')
   await db.init()
-  console.log('end init')
   const stories = await loadStories(config, db)
-  console.log('stories', stories)
   if (stories.fail) {
     throw stories.error
   }
