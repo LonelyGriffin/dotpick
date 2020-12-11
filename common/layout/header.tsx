@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     height: HEIGHT,
     position: 'absolute',
     top: 0,
-    right: 16,
+    right: 32,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
