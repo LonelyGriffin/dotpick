@@ -3,18 +3,20 @@ import {View, StyleSheet, ImageBackground} from 'react-native'
 import {ScrollView} from 'react-native-gesture-handler'
 import {Screen} from '../../common/layout/Screen'
 import {Header} from '../../common/layout/header'
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import {GlobalState} from '../../common/global_store'
 import {StoryPreview} from './story_preview'
+import {requestLoadStory} from '../../common/story/stories_slice'
 
 const backgroundImgSrc = require('../../common/assets/img/background.jpg')
 
-type Props = {}
-
-export const Menu = (props: Props) => {
+export const Menu = () => {
   const stories = useSelector((state: GlobalState) => state.stories)
+  const dispatch = useDispatch()
 
-  const handleRequestLoadStory = useCallback((storyId: string) => {}, [])
+  const handleRequestLoadStory = useCallback((storyId: string) => {
+    dispatch(requestLoadStory(storyId))
+  }, [])
 
   return (
     <Screen>

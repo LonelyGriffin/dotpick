@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {createAction, createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {Story} from '../../core/story'
 
 type StoryState = Story & {
@@ -19,6 +19,8 @@ const storiesSlice = createSlice({
     }
   }
 })
+
+export const requestLoadStory = createAction<string>('stories/requestLoadStory')
 
 export const {setStories} = storiesSlice.actions
 export default storiesSlice.reducer
