@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import {View, StyleSheet, ImageBackground} from 'react-native'
 import {ScrollView} from 'react-native-gesture-handler'
 import {Screen} from '../../common/layout/Screen'
@@ -13,9 +13,8 @@ type Props = {}
 
 export const Menu = (props: Props) => {
   const stories = useSelector((state: GlobalState) => state.stories)
-  const config = useSelector((state: GlobalState) => state.config)
 
-  console.log('render', stories)
+  const handleRequestLoadStory = useCallback((storyId: string) => {}, [])
 
   return (
     <Screen>
@@ -24,9 +23,19 @@ export const Menu = (props: Props) => {
           <Header showBrushFace showMenuButtons message={'Что рассказать?'} />
           <ScrollView horizontal>
             <View style={styles.list}>
-              {stories.map((item) => (
-                <StoryPreview title={item.title} previewImage={item.previewImage} key={item.id} />
-              ))}
+              {stories
+                .slice()
+                .sort((a, b) => (a.id > b.id ? -1 : 1))
+                .map((story) => (
+                  <StoryPreview
+                    id={story.id}
+                    title={story.title}
+                    previewImage={story.previewImage}
+                    key={story.id}
+                    isLoadedResources={story.isLoadedResources}
+                    onRequestLoading={handleRequestLoadStory}
+                  />
+                ))}
             </View>
           </ScrollView>
         </ImageBackground>

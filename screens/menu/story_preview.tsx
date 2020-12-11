@@ -1,12 +1,19 @@
-import React from 'react'
-import {View, StyleSheet, Text, Image} from 'react-native'
+import React, {useCallback} from 'react'
+import {View, StyleSheet, Text, Image, Button} from 'react-native'
 
 type Props = {
+  id: string
   title: string
   previewImage: string
+  isLoadedResources: boolean
+  onRequestLoading: (storyId: string) => void
 }
 
 export const StoryPreview = (props: Props) => {
+  const handleLoadButtonPress = useCallback(() => {
+    props.onRequestLoading(props.id)
+  }, [props.id])
+
   return (
     <View style={styles.root}>
       <View style={styles.coverContainer}>
@@ -19,11 +26,12 @@ export const StoryPreview = (props: Props) => {
           <Text style={styles.messageText}>{props.title}</Text>
         </View>
       </View>
+      <Button title={'Загрузить'} onPress={handleLoadButtonPress} />
     </View>
   )
 }
 
-const SIZE = 160
+const SIZE = 200
 const MESSAGE_HEIGHT = 28
 
 const styles = StyleSheet.create({
