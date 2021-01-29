@@ -1,6 +1,6 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import navigation from './navigation/navigation_slice'
-import stories from './story/stories_slice'
+import stories from './stories/stories_slice'
 import config from './config/config_slice'
 import {createEpicMiddleware} from 'redux-observable'
 import {rootEpic} from './root_epic'
@@ -16,7 +16,7 @@ export const globalStore = configureStore({
   middleware: [epicMiddleware]
 })
 
-epicMiddleware.run(rootEpic)
+epicMiddleware.run(rootEpic as any)
 
 export type GlobalState = ReturnType<typeof globalStore.getState>
 export type GlobalStoreDispatch = typeof globalStore.dispatch

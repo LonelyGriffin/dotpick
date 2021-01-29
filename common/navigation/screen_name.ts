@@ -1,5 +1,6 @@
 export enum ScreenName {
   Loading = 'Loading',
-  Home = 'Home',
-  Picture = 'Picture'
+  Stories = 'Stories',
+  Story = 'Story',
+  Scene = 'Scene'
 }

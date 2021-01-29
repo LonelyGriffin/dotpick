@@ -6,7 +6,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest"
+    "test": "jest",
+    "gen": "ts-node ./tools/generate_static_server --allowSynthenticModules=false"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.1.0",
@@ -19,6 +20,8 @@
     "@types/react-redux": "^7.1.11",
     "bezier-easing": "^2.1.0",
     "expo": "~38.0.8",
+    "expo-av": "~8.2.1",
+    "expo-file-system": "~9.0.1",
     "expo-font": "~8.2.1",
     "expo-gl": "~8.3.1",
     "expo-screen-orientation": "~1.1.1",
@@ -61,6 +64,7 @@
     "svg-path-interpolator": "0.2.5",
     "triangulate-contours": "1.0.2",
     "ts-jest": "^26.4.4",
+    "ts-node": "9.1.1",
     "typescript": "~3.9.5",
     "xml2js": "0.4.23"
   },

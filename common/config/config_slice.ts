@@ -1,9 +1,9 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {Config, BUILD_CONFIG} from '.'
+import {Config, CONFIG} from '.'
 
 export type ConfigState = Config
 
-const initialState: ConfigState = BUILD_CONFIG
+const initialState: ConfigState = CONFIG
 
 const configSlice = createSlice({
   name: 'config',

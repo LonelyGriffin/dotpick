@@ -46,3 +46,5 @@ export class ResultError<T, E = any> implements IResult<T, E> {
     return (undefined as any) as T
   }
 }
+
+export type AsyncResult<T, E = any> = Promise<IResult<T, E>>

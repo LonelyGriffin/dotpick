@@ -1,16 +1,17 @@
 import {Action} from '@reduxjs/toolkit'
 import {from, Observable, of} from 'rxjs'
 import {filter, switchMap, delay, tap} from 'rxjs/operators'
-import {loadConfig} from '../config'
+import {CONFIG} from '../config'
 import {queueNavigationAction} from '../navigation/navigation_slice'
 import {ScreenName} from '../navigation/screen_name'
-import {loadStories} from '../story/load_stories'
+import {load_stories, load_stories_state, prepare_stories_dir} from '../stories/load_stories'
 import {bootstrap} from './bootstrap_slice'
-import {setStories} from '../story/stories_slice'
-import {DataBaseManager} from '../db'
+import {setStoryState, setStoryStates, setStories} from '../stories/stories_slice'
 import {setConfig} from '../config/config_slice'
+import {StateObservable} from 'redux-observable'
+import {GlobalState} from '../global_store'
 
-export const bootstrapEpic = (action$: Observable<Action>) =>
+export const bootstrapEpic = (action$: Observable<Action>, _: StateObservable<GlobalState>) =>
   action$.pipe(
     filter(bootstrap.match),
     switchMap((_) => from(performBootstraping())),
@@ -18,28 +19,18 @@ export const bootstrapEpic = (action$: Observable<Action>) =>
   )
 
 const performBootstraping = async (): Promise<Observable<Action>> => {
-  const config = await loadConfig()
+  await prepare_stories_dir()
+  const storyStates = await load_stories(CONFIG)
+  const storiesState = await load_stories_state()
 
-  const db = new DataBaseManager()
-
-  await db.init()
-  const stories = await loadStories(config, db)
-  if (stories.fail) {
-    throw stories.error
-  }
-
-  const storyStates = stories.unwrap().map((story) => ({
-    ...story,
-    isOver: false,
-    isLoadedResources: false
-  }))
   return of(
-    setConfig(config),
+    setConfig(CONFIG),
     setStories(storyStates),
+    setStoryStates(storiesState),
     queueNavigationAction({
       type: 'REPLACE',
       payload: {
-        name: ScreenName.Home
+        name: ScreenName.Stories
       }
     })
   )

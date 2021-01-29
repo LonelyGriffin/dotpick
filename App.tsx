@@ -1,9 +1,6 @@
 import React from 'react'
 import {StatusBar} from 'expo-status-bar'
-import {PictureView} from './screens/picture_view'
-import {Picture} from './core/picture'
-import paintingPictureJson from './assets/images/watermelon/painting.json'
-import {Menu} from './screens/menu'
+import {StoriesScreen} from './screens/stories'
 import {NavigationContainer} from '@react-navigation/native'
 import {Navigator} from './common/navigation/navigator'
 import {ScreenOrientation} from './common/components/screen_orientation'
@@ -15,8 +12,8 @@ import {globalStore} from './common/global_store'
 import {Bootstrap} from './common/bootstrap/bootstrap_component'
 import {AppLoading} from 'expo'
 import {useFonts} from 'expo-font'
-
-const currentPicture: Picture = paintingPictureJson as any
+import {StoryScreen} from './screens/story'
+import SceneScreen from './screens/scene'
 
 export default function App() {
   // TODO: Обработать ошибки. Внести в бутстрапинг
@@ -41,14 +38,9 @@ export default function App() {
           }}
         >
           <Navigator.Screen name={ScreenName.Loading} component={LoadingScreen} />
-          <Navigator.Screen name={ScreenName.Home} component={Menu} />
-          <Navigator.Screen
-            name={ScreenName.Picture}
-            component={PictureView}
-            initialParams={{
-              picture: currentPicture
-            }}
-          />
+          <Navigator.Screen name={ScreenName.Stories} component={StoriesScreen} />
+          <Navigator.Screen name={ScreenName.Story} component={StoryScreen} />
+          <Navigator.Screen name={ScreenName.Scene} component={SceneScreen} />
         </Navigator.Navigator>
         <Bootstrap />
       </Provider>

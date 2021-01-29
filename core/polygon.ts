@@ -1,15 +1,8 @@
 import {Vector} from './vector'
 
-export type PolygonIndex = [number, number, number] // indexes of triangle vertexes
-export type Polygon = {
-  id: string
-  vertexes: Vector[]
-  indexes: PolygonIndex[]
-  color: string
-  contour: Vector[]
-}
+export type Polygon = Array<Vector>
 
-export const vertexInPolygon = (vector: Vector, contour: Vector[]) => {
+export const vertexInPolygon = (vector: Vector, contour: Polygon) => {
   // ray-casting algorithm based on
   // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
 

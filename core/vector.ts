@@ -31,3 +31,21 @@ export const vectorScalar = map as {
   (operator: (x1: number) => number, v: Vector): Vector
   (operator: (x1: number) => number): (v: Vector) => Vector
 }
+
+export const fitVectorInProportional = (vec: Vector) => (containerVec: Vector) => {
+  const containerWidth = vectorWidth(containerVec)
+  const containerHeight = vectorHeight(containerVec)
+  const width = vectorWidth(vec)
+  const height = vectorHeight(vec)
+
+  const toWWidth = containerWidth
+  const toWHeight = (containerWidth / width) * height
+  const toHWidth = (containerHeight / height) * width
+  const toHHeight = containerHeight
+
+  if (toWHeight <= containerHeight) {
+    return newVector(toWWidth, toWHeight)
+  } else {
+    return newVector(toHWidth, toHHeight)
+  }
+}

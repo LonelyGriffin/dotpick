@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    transform: [{scaleX: -1, scaleY: 1}, {translateX: 10}, {translateY: -10}]
+    transform: [{scaleY: 1}, {scaleX: -1}, {translateX: 10}, {translateY: -10}]
   },
   message: {
     height: 32,

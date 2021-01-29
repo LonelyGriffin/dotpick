@@ -6,35 +6,37 @@ import {newVector, setVectorX, setVectorY, Vector, vectorsApply, vectorScalar, v
 export type Box = [Vector, Vector]
 
 export const newBox = (min: Vector, max: Vector): Box => [min, max]
-export const newBoxFromPolygons = (polygons: Polygon[]) => {
-  const [initX, initY] = polygons[0].vertexes[0]
-  const min = newVector(initX, initY)
-  const max = newVector(initX, initY)
+export const newBoxFromSize = (width: number, height: number): Box => [newVector(0, 0), newVector(width, height)]
 
-  polygons.forEach((polygon) => {
-    polygon.vertexes.forEach((vertex) => {
-      const x = vectorX(vertex)
-      const y = vectorY(vertex)
-      if (x < vectorX(min)) {
-        setVectorX(min, x)
-      }
+// export const newBoxFromPolygons = (polygons: Polygon[]) => {
+//   const [initX, initY] = polygons[0].vertexes[0]
+//   const min = newVector(initX, initY)
+//   const max = newVector(initX, initY)
 
-      if (x > vectorX(max)) {
-        setVectorX(max, x)
-      }
+//   polygons.forEach((polygon) => {
+//     polygon.vertexes.forEach((vertex) => {
+//       const x = vectorX(vertex)
+//       const y = vectorY(vertex)
+//       if (x < vectorX(min)) {
+//         setVectorX(min, x)
+//       }
 
-      if (y < vectorY(min)) {
-        setVectorY(min, y)
-      }
+//       if (x > vectorX(max)) {
+//         setVectorX(max, x)
+//       }
 
-      if (y > vectorY(max)) {
-        setVectorY(max, y)
-      }
-    })
-  })
+//       if (y < vectorY(min)) {
+//         setVectorY(min, y)
+//       }
 
-  return newBox(min, max)
-}
+//       if (y > vectorY(max)) {
+//         setVectorY(max, y)
+//       }
+//     })
+//   })
+
+//   return newBox(min, max)
+// }
 
 export const boxMin = (box: Box) => box[0]
 export const boxMax = (box: Box) => box[1]
