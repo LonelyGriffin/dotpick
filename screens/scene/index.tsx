@@ -109,7 +109,7 @@ export const SceneScreen = (props: Props) => {
 
   const isLoading = state.resourcesLoading || !state.screenSize
   if (isLoading) {
-    console.log('isLoading', state.resourcesLoading, state.screenSize)
+    // console.log('isLoading', state.resourcesLoading, state.screenSize)
     return (
       <View style={styles.root} onLayout={handleLayoutChange}>
         <LoadingScreen />
@@ -117,7 +117,7 @@ export const SceneScreen = (props: Props) => {
     )
   }
 
-  console.log('render', state.currentPointNumber, state.pointState, state.videoUris)
+  // console.log('render', state.currentPointNumber, state.pointState, state.videoUris)
 
   return (
     <Screen>

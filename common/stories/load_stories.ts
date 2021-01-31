@@ -191,8 +191,6 @@ export const get_scene_video_uris = async (story: Story, scene: Scene) => {
           FileSystem.documentDirectory + `stories/${story.id}/scenes/${scene.id}/video_${index}.mp4`
         )
 
-        console.log('exist', info.exists, info.uri)
-
         return info.uri
       })
   )

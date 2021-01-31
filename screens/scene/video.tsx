@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useRef} from 'react'
 import {AVPlaybackStatus, Video} from 'expo-av'
+import {Text} from 'react-native'
 
 type Props = {
   videoURI: string
@@ -7,43 +8,66 @@ type Props = {
   shouldPlay: boolean
 }
 
-export const VideoController = (props: Props) => {
-  const playerRef = useRef<Video>(null)
-  console.log('video render', props.shouldPlay)
-  useEffect(() => {
-    ;(async () => {
-      if (!playerRef.current) {
-        return
-      }
-      console.log('video effect', props.videoURI)
-      await playerRef.current.loadAsync({uri: props.videoURI})
-      console.log('video effect loaded', props.shouldPlay)
-      await playerRef.current.setStatusAsync({shouldPlay: props.shouldPlay, positionMillis: 0})
-      console.log('video effect finish')
-    })()
-  }, [props.videoURI])
+type State = {
+  loading: boolean
+}
 
-  const handlePlayBackStatusUpdate = useCallback((status: AVPlaybackStatus) => {
+class VideoController extends React.Component<Props, State> {
+  state: State = {
+    loading: false
+  }
+  private playerRef1 = React.createRef<Video>()
+  private playerRef2 = React.createRef<Video>()
+
+  shouldComponentUpdate(nextProps: Props, nextState: State) {
+    if (nextProps.videoURI !== this.props.videoURI) {
+      void this.play1(this.props.videoURI, true)
+    }
+    // return nextState.loading !== this.state.loading
+    return false
+  }
+
+  componentDidMount() {
+    this.play1(this.props.videoURI, this.props.shouldPlay)
+  }
+
+  async play1(videoURI: string, shouldPlay: boolean) {
+    if (!this.playerRef1.current) {
+      return
+    }
+    console.log('video1 effect', videoURI)
+    // await this.playerRef1.current.unloadAsync()
+    await this.playerRef1.current.loadAsync({uri: videoURI}, {shouldPlay: shouldPlay, positionMillis: 0})
+    console.log('video1 effect finish')
+  }
+
+  handlePlayBackStatusUpdate = (status: AVPlaybackStatus) => {
     if (status.isLoaded === false) {
       return
     }
 
     if (status.didJustFinish) {
-      props.onFinished()
+      this.props.onFinished()
     }
-  }, [])
+  }
 
-  return (
-    <Video
-      ref={playerRef}
-      rate={1.0}
-      volume={0.5}
-      resizeMode='stretch'
-      progressUpdateIntervalMillis={16}
-      style={{flex: 1}}
-      onPlaybackStatusUpdate={handlePlayBackStatusUpdate}
-    />
-  )
+  componentWillUnmount() {
+    console.log('video unmount')
+  }
+
+  render() {
+    return (
+      <Video
+        ref={this.playerRef1}
+        rate={1.0}
+        volume={0.5}
+        resizeMode='contain'
+        progressUpdateIntervalMillis={16}
+        style={{flex: 1, backgroundColor: 'red'}}
+        onPlaybackStatusUpdate={this.handlePlayBackStatusUpdate}
+      />
+    )
+  }
 }
 
 export default VideoController

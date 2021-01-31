@@ -29,9 +29,10 @@ export const StoryScreen = (props: Props) => {
   const dispatch = useDispatch()
 
   const handleOpenScene = useCallback((sceneId) => {
+    console.log('open scene')
     dispatch(
       queueNavigationAction({
-        type: 'PUSH',
+        type: 'REPLACE',
         payload: {
           name: ScreenName.Scene,
           params: {
