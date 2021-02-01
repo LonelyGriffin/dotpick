@@ -53,21 +53,10 @@ const checkIds = (entries: Array<{id: string | number}>) => {
 
       await fs.copyFile(path.join(sceneSource, 'preview_empty.png'), path.join(sceneDestination, 'preview_empty.png'))
       await fs.copyFile(path.join(sceneSource, 'preview_full.png'), path.join(sceneDestination, 'preview_full.png'))
+      await fs.copyFile(path.join(sceneSource, 'video.mp4'), path.join(sceneDestination, 'video.mp4'))
 
       const points = require(path.join(sceneSource, 'points.ts')).default
       await fs.writeFile(path.join(sceneDestination, 'points.json'), JSON.stringify(points))
-
-      await asyncForeach(points, async (_, index) => {
-        await fs.copyFile(
-          path.join(sceneSource, `video_${index}.mp4`),
-          path.join(sceneDestination, `video_${index}.mp4`)
-        )
-      })
-
-      await fs.copyFile(
-        path.join(sceneSource, `video_${points.length}.mp4`),
-        path.join(sceneDestination, `video_${points.length}.mp4`)
-      )
     })
   })
 })()

@@ -5,7 +5,8 @@ import {Text} from 'react-native'
 type Props = {
   videoURI: string
   onFinished: () => void
-  shouldPlay: boolean
+  from: number
+  to: number
 }
 
 type State = {
@@ -13,56 +14,49 @@ type State = {
 }
 
 class VideoController extends React.Component<Props, State> {
-  state: State = {
-    loading: false
-  }
-  private playerRef1 = React.createRef<Video>()
-  private playerRef2 = React.createRef<Video>()
+  private playerRef = React.createRef<Video>()
+  private finished = false
 
-  shouldComponentUpdate(nextProps: Props, nextState: State) {
-    if (nextProps.videoURI !== this.props.videoURI) {
-      void this.play1(this.props.videoURI, true)
+  shouldComponentUpdate(nextProps: Props) {
+    if (nextProps.from !== this.props.from) {
+      this.playerRef.current!.setStatusAsync({positionMillis: nextProps.from, shouldPlay: true}).then(() => {
+        this.finished = false
+      })
     }
-    // return nextState.loading !== this.state.loading
+    console.log(nextProps.from, nextProps.to)
     return false
   }
 
   componentDidMount() {
-    this.play1(this.props.videoURI, this.props.shouldPlay)
-  }
-
-  async play1(videoURI: string, shouldPlay: boolean) {
-    if (!this.playerRef1.current) {
-      return
-    }
-    console.log('video1 effect', videoURI)
-    // await this.playerRef1.current.unloadAsync()
-    await this.playerRef1.current.loadAsync({uri: videoURI}, {shouldPlay: shouldPlay, positionMillis: 0})
-    console.log('video1 effect finish')
+    console.log(this.props.from, this.props.to)
+    this.playerRef
+      .current!.loadAsync({uri: this.props.videoURI}, {shouldPlay: true, positionMillis: this.props.from})
+      .then(() => {
+        this.finished = false
+      })
   }
 
   handlePlayBackStatusUpdate = (status: AVPlaybackStatus) => {
-    if (status.isLoaded === false) {
+    if (status.isLoaded === false || this.finished) {
       return
     }
 
-    if (status.didJustFinish) {
-      this.props.onFinished()
+    if (status.didJustFinish || status.positionMillis >= this.props.to) {
+      this.finished = true
+      this.playerRef.current!.pauseAsync().then(() => {
+        this.props.onFinished()
+      })
     }
-  }
-
-  componentWillUnmount() {
-    console.log('video unmount')
   }
 
   render() {
     return (
       <Video
-        ref={this.playerRef1}
+        ref={this.playerRef}
         rate={1.0}
         volume={0.5}
         resizeMode='contain'
-        progressUpdateIntervalMillis={16}
+        progressUpdateIntervalMillis={4}
         style={{flex: 1, backgroundColor: 'red'}}
         onPlaybackStatusUpdate={this.handlePlayBackStatusUpdate}
       />

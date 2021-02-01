@@ -17,4 +17,6 @@ export type Scene = {
 export type ScenePoint = {
   polygons: Polygon[]
   polygonsColor: string
+  videoPauseBegin: number
+  videoPauseEnd: number
 }

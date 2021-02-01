@@ -4,7 +4,7 @@ const scenes: Scene[] = [
   {
     id: 'a_watermelon',
     title: 'A - Арбуз',
-    videoDuration: 2000
+    videoDuration: 26000
   }
 ]
 

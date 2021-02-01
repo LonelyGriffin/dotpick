@@ -151,15 +151,10 @@ export const load_story_resources = async (config: Config, story: Story) => {
           config.api + `/stories/${story.id}/scenes/${scene.id}/preview_full.png`,
           FileSystem.documentDirectory + `stories/${story.id}/scenes/${scene.id}/preview_full.png`
         ),
-        ...points
-          .map((_, index) => index)
-          .concat(points.length)
-          .map((index) => {
-            return FileSystem.downloadAsync(
-              config.api + `/stories/${story.id}/scenes/${scene.id}/video_${index}.mp4`,
-              FileSystem.documentDirectory + `stories/${story.id}/scenes/${scene.id}/video_${index}.mp4`
-            )
-          })
+        FileSystem.downloadAsync(
+          config.api + `/stories/${story.id}/scenes/${scene.id}/video.mp4`,
+          FileSystem.documentDirectory + `stories/${story.id}/scenes/${scene.id}/video.mp4`
+        )
       ])
     })
   ])
@@ -179,19 +174,10 @@ export const get_scene_points = async (story: Story, scene: Scene): Promise<Scen
   return JSON.parse(res)
 }
 
-export const get_scene_video_uris = async (story: Story, scene: Scene) => {
-  const points = await get_scene_points(story, scene)
-
-  return Promise.all(
-    points
-      .map((_, index) => index)
-      .concat(points.length)
-      .map(async (index) => {
-        const info = await FileSystem.getInfoAsync(
-          FileSystem.documentDirectory + `stories/${story.id}/scenes/${scene.id}/video_${index}.mp4`
-        )
-
-        return info.uri
-      })
+export const get_scene_video_uri = async (story: Story, scene: Scene) => {
+  const info = await FileSystem.getInfoAsync(
+    FileSystem.documentDirectory + `stories/${story.id}/scenes/${scene.id}/video.mp4`
   )
+
+  return info.uri
 }

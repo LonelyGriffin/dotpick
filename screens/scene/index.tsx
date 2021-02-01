@@ -4,7 +4,7 @@ import {View, StyleSheet, LayoutChangeEvent, Button} from 'react-native'
 import {fitVectorInProportional, newVector, Vector, vectorHeight, vectorScalar, vectorWidth} from '../../core/vector'
 import Video from './video'
 import {Screen} from '../../common/layout/Screen'
-import {get_scene_points, get_scene_video_uris, load_scenes} from '../../common/stories/load_stories'
+import {get_scene_points, get_scene_video_uri, load_scenes} from '../../common/stories/load_stories'
 import {Route} from '@react-navigation/native'
 import {ScreenName} from '../../common/navigation/screen_name'
 import {ScreensParams} from '../../common/navigation/screens_params'
@@ -12,6 +12,7 @@ import {GlobalState} from '../../common/global_store'
 import {useSelector} from 'react-redux'
 import {Scene, ScenePoint, Story} from '../../core/story'
 import LoadingScreen from '../loading_screen'
+import scenes from '../../tools/generate_static_server/data/stories/abc/scenes'
 
 const CONTAINER_SIZE = newVector(1792, 828)
 const PICTURE_PADDING = 50
@@ -20,7 +21,7 @@ const getPictureContainerSize = fitVectorInProportional(CONTAINER_SIZE)
 type State = {
   screenSize?: Vector
   scene?: Scene
-  videoUris?: string[]
+  videoUri?: string
   points?: ScenePoint[]
   currentPointNumber: number
   resourcesLoading: boolean
@@ -69,7 +70,7 @@ export const SceneScreen = (props: Props) => {
         return
       }
 
-      const videoUris = await get_scene_video_uris(story, scene)
+      const videoUri = await get_scene_video_uri(story, scene)
       const points = await get_scene_points(story, scene)
 
       if (canceled) {
@@ -81,7 +82,7 @@ export const SceneScreen = (props: Props) => {
         resourcesLoading: false,
         points,
         scene,
-        videoUris
+        videoUri
       }))
     })()
 
@@ -91,14 +92,13 @@ export const SceneScreen = (props: Props) => {
   }, [story])
 
   const handleVideoFinish = useCallback(() => {
-    console.log('video finished')
     setState((state) => ({
       ...state,
       pointState: 'action'
     }))
   }, [])
 
-  const nextPoint = () => {
+  const gotToNextPoint = () => {
     setState((state) => ({
       ...state,
       currentPointNumber:
@@ -117,7 +117,8 @@ export const SceneScreen = (props: Props) => {
     )
   }
 
-  // console.log('render', state.currentPointNumber, state.pointState, state.videoUris)
+  const currentPoint: ScenePoint | undefined = state.points![state.currentPointNumber]
+  const prevPoint: ScenePoint | undefined = state.points![state.currentPointNumber - 1]
 
   return (
     <Screen>
@@ -132,13 +133,14 @@ export const SceneScreen = (props: Props) => {
           ]}
         >
           <Video
-            shouldPlay={state.pointState === 'video'}
-            videoURI={state.videoUris![state.currentPointNumber]}
+            from={prevPoint ? prevPoint.videoPauseEnd : 0}
+            to={currentPoint ? currentPoint.videoPauseBegin : state.scene!.videoDuration}
+            videoURI={state.videoUri!}
             onFinished={handleVideoFinish}
           />
           {state.pointState === 'action' && (
             <View style={styles.action}>
-              <Button title={'next'} onPress={nextPoint} />
+              <Button title={'next'} onPress={gotToNextPoint} />
             </View>
           )}
         </View>
