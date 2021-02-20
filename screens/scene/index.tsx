@@ -13,6 +13,7 @@ import {useSelector} from 'react-redux'
 import {Scene, ScenePoint, Story} from '../../core/story'
 import LoadingScreen from '../loading_screen'
 import scenes from '../../tools/generate_static_server/data/stories/abc/scenes'
+import {PointPainting} from './point_painting'
 
 const CONTAINER_SIZE = newVector(1792, 828)
 const PICTURE_PADDING = 50
@@ -25,13 +26,13 @@ type State = {
   points?: ScenePoint[]
   currentPointNumber: number
   resourcesLoading: boolean
-  pointState: 'video' | 'action'
+  phase: 'video' | 'painting' | 'end'
 }
 
 const initialState: State = {
   resourcesLoading: true,
   currentPointNumber: 0,
-  pointState: 'video'
+  phase: 'video'
 }
 
 type Props = {
@@ -94,16 +95,16 @@ export const SceneScreen = (props: Props) => {
   const handleVideoFinish = useCallback(() => {
     setState((state) => ({
       ...state,
-      pointState: 'action'
+      phase: 'painting'
     }))
   }, [])
 
-  const gotToNextPoint = () => {
+  const goToNext = () => {
     setState((state) => ({
       ...state,
       currentPointNumber:
         state.points!.length >= state.currentPointNumber ? state.currentPointNumber + 1 : state.currentPointNumber,
-      pointState: state.points!.length >= state.currentPointNumber ? 'video' : 'action'
+      phase: state.points!.length >= state.currentPointNumber ? 'video' : 'end'
     }))
   }
 
@@ -138,9 +139,14 @@ export const SceneScreen = (props: Props) => {
             videoURI={state.videoUri!}
             onFinished={handleVideoFinish}
           />
-          {state.pointState === 'action' && (
+          {state.phase === 'painting' && (
             <View style={styles.action}>
-              <Button title={'next'} onPress={gotToNextPoint} />
+              <PointPainting
+                viewportSize={pictureContainerSize}
+                color={currentPoint!.polygonsColor}
+                polygons={currentPoint!.polygons}
+                onFinish={goToNext}
+              />
             </View>
           )}
         </View>
@@ -163,6 +169,8 @@ const styles = StyleSheet.create({
   action: {
     position: 'absolute',
     left: 0,
-    right: 0
+    top: 0,
+    width: '100%',
+    height: '100%'
   }
 })

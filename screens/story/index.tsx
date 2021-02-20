@@ -74,7 +74,7 @@ export const StoryScreen = (props: Props) => {
           <ScrollView horizontal>
             <View style={styles.list}>
               {scenes.map((scene) => (
-                <ScenePreview scene={scene} story={story} key={story.id} onOpen={handleOpenScene} />
+                <ScenePreview scene={scene} story={story} key={scene.id} onOpen={handleOpenScene} />
               ))}
             </View>
           </ScrollView>

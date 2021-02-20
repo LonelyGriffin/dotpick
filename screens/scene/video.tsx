@@ -1,6 +1,5 @@
-import React, {useCallback, useEffect, useRef} from 'react'
+import React from 'react'
 import {AVPlaybackStatus, Video} from 'expo-av'
-import {Text} from 'react-native'
 
 type Props = {
   videoURI: string
@@ -23,7 +22,7 @@ class VideoController extends React.Component<Props, State> {
         this.finished = false
       })
     }
-    console.log(nextProps.from, nextProps.to)
+    // console.log(nextProps.from, nextProps.to)
     return false
   }
 
@@ -55,9 +54,9 @@ class VideoController extends React.Component<Props, State> {
         ref={this.playerRef}
         rate={1.0}
         volume={0.5}
-        resizeMode='contain'
+        resizeMode='cover'
         progressUpdateIntervalMillis={4}
-        style={{flex: 1, backgroundColor: 'red'}}
+        style={{flex: 1}}
         onPlaybackStatusUpdate={this.handlePlayBackStatusUpdate}
       />
     )

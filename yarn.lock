@@ -1803,6 +1803,14 @@
   dependencies:
     ts-toolbelt "^6.15.1"
 
+"@types/react-native-canvas@^0.1.5":
+  version "0.1.5"
+  resolved "http://npm.yandex-team.ru/@types%2freact-native-canvas/-/react-native-canvas-0.1.5.tgz#2f32f4ad516ad1ab172781403f9c8c72ab041512"
+  integrity sha512-1qq2pONzhFQcRyaKiepZdIIeq9wa7SEjERtYL9WDysiqsfgGa4d7TjGyZmOJOb9gJJ8RFQX7AL5ggKVIR8mz9Q==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
 "@types/react-native-video@^5.0.3":
   version "5.0.3"
   resolved "http://npm.yandex-team.ru/@types%2freact-native-video/-/react-native-video-5.0.3.tgz#21aef3c087d498d75cb4631e8197d2b4b913170c"
@@ -3034,6 +3042,11 @@ csstype@^3.0.2:
   version "3.0.3"
   resolved "http://npm.yandex-team.ru/csstype/-/csstype-3.0.3.tgz#2b410bbeba38ba9633353aff34b05d9755d065f8"
   integrity sha512-jPl+wbWPOWJ7SXsWyqGRk3lGecbar0Cb0OvZF/r/ZU011R4YqiRehgkQ9p4eQfo9DSDLqLL3wHwfxeJiuIsNag==
+
+ctx-polyfill@^1.1.4:
+  version "1.1.4"
+  resolved "http://npm.yandex-team.ru/ctx-polyfill/-/ctx-polyfill-1.1.4.tgz#08420bc5c540d08ac36d05720ca503c65e302d65"
+  integrity sha1-CEILxcVA0IrDbQVyDKUDxl4wLWU=
 
 dashdash@^1.12.0:
   version "1.14.1"
@@ -6585,6 +6598,13 @@ react-native-appearance@~0.3.3:
     fbemitter "^2.1.1"
     invariant "^2.2.4"
     use-subscription "^1.0.0"
+
+react-native-canvas@^0.1.37:
+  version "0.1.37"
+  resolved "http://npm.yandex-team.ru/react-native-canvas/-/react-native-canvas-0.1.37.tgz#62381f685effcd3263d10f13b4174a8c5b533dcf"
+  integrity sha512-8W3YlS9WoxQeyK7/fjzlVIOcAqigE5pscn9xoU7rSYyzOJ69h5LjDlytjgZ6i7G7KqCRTarVIYJL8dAuER1OVQ==
+  dependencies:
+    ctx-polyfill "^1.1.4"
 
 react-native-gesture-handler@~1.6.0:
   version "1.6.1"
