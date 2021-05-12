@@ -11,6 +11,7 @@ import {
 } from 'react-native-gesture-handler'
 import {debounce, throttle} from 'lodash-es'
 import {Asset} from 'expo-asset'
+import scenes from '../../tools/generate_static_server/data/stories/abc/scenes'
 
 type Props = {
   viewportSize: Vector
@@ -21,34 +22,39 @@ type Props = {
 
 export const PointPainting = (props: Props) => {
   const ctxRef = useRef<CanvasRenderingContext2D>()
+  const ctx2Ref = useRef<CanvasRenderingContext2D>()
   const prevTouchPos = useRef<Vector | null>(null)
 
   const checkEndPainting = debounce(() => {
     const ctx = ctxRef.current
+    const ctx2 = ctxRef.current
 
-    if (!ctx) {
+    if (!ctx || !ctx2) {
       return
     }
-    ;(ctx.getImageData(
-      0,
-      0,
-      props.viewportSize[0] * PixelRatio.get(),
-      props.viewportSize[1] * PixelRatio.get()
-    ) as any).then((imgData: ImageData) => {
-      let count = 0
-      const length = imgData.height * imgData.width
-      console.log('calc', length, props.viewportSize)
-      // for (let i = 0; i < length; i += 4) {
-      //   const r = imgData.data[i]
-      //   // const g = pixels[i + 1]
-      //   // const b = pixels[i + 2]
-      //   // const a = pixels[i + 3]
-      //   if (r !== 0) {
-      //     count++
-      //   }
-      // }
-      console.log(count)
-    })
+    const scale = 1 / (PixelRatio.get() * 2)
+    ctx2.scale(scale, scale)
+
+    console.log(scale)
+
+    ctx2.drawImage(ctx.canvas, 0, 0)
+    ;(ctx2.getImageData(0, 0, props.viewportSize[0] / 2, props.viewportSize[1] / 2) as any).then(
+      (imgData: ImageData) => {
+        let count = 0
+        const length = imgData.height * imgData.width
+        console.log('calc', length)
+        // for (let i = 0; i < length; i += 4) {
+        //   const r = imgData.data[i]
+        //   // const g = pixels[i + 1]
+        //   // const b = pixels[i + 2]
+        //   // const a = pixels[i + 3]
+        //   if (r !== 0) {
+        //     count++
+        //   }
+        // }
+        console.log(count)
+      }
+    )
   }, 500)
 
   const handleCanvas = useCallback(async (canvas: Canvas) => {
@@ -128,10 +134,19 @@ export const PointPainting = (props: Props) => {
     }
   }
 
+  const handleSecondCanvas = (canvas: Canvas) => {
+    const ctx = canvas.getContext('2d')
+    canvas.width = props.viewportSize[0]
+    canvas.height = props.viewportSize[1]
+
+    ctx2Ref.current = ctx as any
+  }
+
   return (
     <PanGestureHandler onGestureEvent={panGestureEventHandler} onHandlerStateChange={panGestureStateChangeHandler}>
       <View style={styles.fullSize}>
-        <Canvas ref={handleCanvas} style={styles.fullSize} />
+        <Canvas ref={handleSecondCanvas} style={styles.canvas} />
+        <Canvas ref={handleCanvas} style={styles.canvas2} />
       </View>
     </PanGestureHandler>
   )
@@ -140,6 +155,22 @@ export const PointPainting = (props: Props) => {
 const styles = StyleSheet.create({
   fullSize: {
     width: '100%',
-    height: '100%'
+    height: '100%',
+    position: 'relative'
+  },
+  canvas: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    opacity: 0.2
+  },
+  canvas2: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    left: 0,
+    top: 0
   }
 })

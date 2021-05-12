@@ -13,7 +13,7 @@ import {useSelector} from 'react-redux'
 import {Scene, ScenePoint, Story} from '../../core/story'
 import LoadingScreen from '../loading_screen'
 import scenes from '../../tools/generate_static_server/data/stories/abc/scenes'
-import {PointPainting} from './point_painting'
+import {PointPainting} from './point_painting_canvas'
 
 const CONTAINER_SIZE = newVector(1792, 828)
 const PICTURE_PADDING = 50
